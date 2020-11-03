@@ -2,10 +2,11 @@ import bookPreview from './book-preview.cmp.js';
 
 
 export default {
-    props:['books'],
+    props: ['books'],
     template: `
         <section class="book-list">
             <h2>Our Books</h2>
+            <!-- <router-link class="addbook-link" to="/addbook" exact>Add a book</router-link> -->
             <ul >
                 <li v-for="currBook in books" :key="currBook.id" >
                    <book-preview :book="currBook" @click.native="bookClicked(currBook.id)" />
@@ -20,13 +21,13 @@ export default {
             this.$emit('remove', bookId)
         },
         bookClicked(bookId) {
-            console.log(bookId,'bookclicked')
+            console.log(bookId, 'bookclicked')
             this.$router.push(`/book/${bookId}`)
             // alert('The book ID is:', bookId);
             // this.$emit('selected', bookId)
         }
     },
-    components:{
+    components: {
         bookPreview
     }
 }

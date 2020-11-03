@@ -7,15 +7,59 @@ export const bookService = {
     getBookById,
     STORAGE_KEY,
     addReview,
-    removeReview
+    removeReview,
+    getPreviousBookId,
+    getNextBookId,
+    getBookstoShow,
+    addBook
 };
 
 const gBooks = _createBooks();
+function addBook(book) {
+    gBooks.unshift(book)
+}
+function getBookstoShow(searchedBook) {
+    return axios.get(`https://www.googleapis.com/books/v1/volumes?printType=books&q=${searchedBook}`)
+        .then(res => res.data.items)
+        .then(book => book.map(book => {
+            return {
+                id: book.id,
+                title: book.volumeInfo.title,
+                subtitle: book.volumeInfo.subtitle,
+                authors: book.volumeInfo.authors,
+                publishedDate: (book.volumeInfo.publishedDate).substring(0, 4),
+                description: book.volumeInfo.description,
+                pageCount: book.volumeInfo.pageCount,
+                categories: book.volumeInfo.categories,
+                // thumbnail: book.volumeInfo.imageLinks.smallThumbnail,
+                thumbnail: '',
+                language: book.volumeInfo.language,
+                listPrice: {
+                    amount: 150,
+                    currencyCode: "EUR",
+                    isOnSale: false,
+                },
+                reviews: []
+            }
+        }))
+}
 
+
+function getPreviousBookId(bookId) {
+    var currBookIdx = gBooks.findIndex(book => book.id === bookId)
+    var previousBookIdx = currBookIdx - 1
+    var previousBookId = gBooks[previousBookIdx].id
+    return previousBookId
+}
+function getNextBookId(bookId) {
+    var currBookIdx = gBooks.findIndex(book => book.id === bookId)
+    var nextBookIdx = currBookIdx + 1
+    var nextBookId = gBooks[nextBookIdx].id
+    return nextBookId
+}
 function addReview(bookId, review) {
     getBookById(bookId)
         .then(book => book.reviews.push(review) && utilService.storeToStorage(bookService.STORAGE_KEY, gBooks))
-
 }
 function removeReview(bookId, idx) {
     const bookIdx = gBooks.findIndex(book => book.id === bookId)

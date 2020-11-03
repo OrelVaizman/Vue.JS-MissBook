@@ -9,6 +9,7 @@ export default {
                         class="fas fa-times"></i></button></li>
             <li><router-link to="/" exact>Home</router-link></li>
             <li><router-link to="/book" exact>Books App</router-link></li>
+            <li><router-link to="/addbook" exact>Add book</router-link></li>
             <li><router-link to="/about">About</router-link></li>
         </ul>
     </header>

@@ -1,6 +1,4 @@
 import { eventBus } from '../../services/event-bus-service.js'
-
-
 export default {
     template: `
         <section v-show="msg" class="user-msg">

@@ -27,13 +27,14 @@ export default {
            </div>
 
            <reviews-list :book="book"></reviews-list>
+           <button @click="onPreviousBook">Previous Book</button><button @click="onNextBook">Next Book </button>
            <book-review class="book-review" :book="book">
            </book-review>
         </section>
     `,
     data() {
         return {
-            book: null
+            book: null,
         }
     },
     computed: {
@@ -67,6 +68,14 @@ export default {
     methods: {
         closeDetails() {
             this.$router.push("/book")
+        },
+        onPreviousBook() {
+            var prevBookID = bookService.getPreviousBookId(this.book.id)
+            this.$router.push(`/book/${prevBookID}`)
+        },
+        onNextBook() {
+            var nextBookID = bookService.getNextBookId(this.book.id);
+            this.$router.push(`/book/${nextBookID}`)
         }
     },
     created() {
@@ -74,6 +83,12 @@ export default {
         console.log(id)
         if (id) {
             bookService.getBookById(id)
+                .then(book => this.book = book)
+        }
+    },
+    watch: {
+        '$route.params.bookId'() {
+            bookService.getBookById(this.$route.params.bookId)
                 .then(book => this.book = book)
         }
     },
