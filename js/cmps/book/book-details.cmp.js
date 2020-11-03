@@ -12,12 +12,12 @@ export default {
 </div>
 <div class="book-container-text">
         <h1><strong>Book Title: </strong>{{book.title}}</h1>
-        <h3><strong>Book Sub-title:</strong>{{book.subtitle}}</h3>
-        <h3><strong>Authors:</strong>{{authors}}</h3>
+        <h3><strong>Book Sub-title: </strong>{{book.subtitle}}</h3>
+        <h3><strong>Authors: </strong>{{authors}}</h3>
         <h5><strong>Published date: </strong>{{book.publishedDate}}</h5>
-        <h5><strong>Number of pages</strong>{{book.pageCount}}</h5>
-        <h5><strong>Categories:</strong>{{categories}}</h5>
-        <h5><strong>Language</strong>{{book.language}}</h5>
+        <h5><strong>Number of pages: </strong>{{book.pageCount}}</h5>
+        <h5><strong>Categories: </strong>{{categories}}</h5>
+        <h5><strong>Language: </strong>{{book.language}}</h5>
            <h5><strong>Tags: </strong> {{pageCount}} | {{publishedDate}} </h5>
            <p>{{categories}}</p>
            <book-desc :desc="book.description"></book-desc>

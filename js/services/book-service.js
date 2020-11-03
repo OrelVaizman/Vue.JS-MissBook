@@ -18,21 +18,25 @@ const gBooks = _createBooks();
 function addBook(book) {
     gBooks.unshift(book)
 }
+
+
 function getBookstoShow(searchedBook) {
     return axios.get(`https://www.googleapis.com/books/v1/volumes?printType=books&q=${searchedBook}`)
         .then(res => res.data.items)
-        .then(book => book.map(book => {
+        .catch(err => console.log(err))
+        .then(books => books.map(book => {
+            var computedThumbnail = (book.volumeInfo.imageLinks) ? book.volumeInfo.imageLinks.thumbnail : 'imgs/noimage.png'
+            var computedPublishedDate = (book.volumeInfo.publishedDate) ? (book.volumeInfo.publishedDate).substring(0, 4) : 'UNKNOWN'
             return {
                 id: book.id,
                 title: book.volumeInfo.title,
                 subtitle: book.volumeInfo.subtitle,
                 authors: book.volumeInfo.authors,
-                publishedDate: (book.volumeInfo.publishedDate).substring(0, 4),
+                publishedDate: computedPublishedDate,
                 description: book.volumeInfo.description,
                 pageCount: book.volumeInfo.pageCount,
                 categories: book.volumeInfo.categories,
-                // thumbnail: book.volumeInfo.imageLinks.smallThumbnail,
-                thumbnail: '',
+                thumbnail: computedThumbnail,
                 language: book.volumeInfo.language,
                 listPrice: {
                     amount: 150,

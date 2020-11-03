@@ -26,7 +26,6 @@ export default {
             bookService.getBookstoShow(this.bookToSearch)
                 .then(books => {
                     this.foundBooks = books;
-                    utilService.storeToStorage('FOUNDBOOKS', this.foundBooks)
                     console.log(this.foundBooks)
                 })
         },
@@ -36,10 +35,8 @@ export default {
         }
     },
     created() {
-        this.foundBooks = utilService.loadFromStorage('FOUNDBOOKS')
     },
     components: {
         bookPreview,
-
     }
 }
