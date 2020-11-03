@@ -16,15 +16,14 @@ export default {
     `,
     data() {
         return {
-            reviews: null
+            reviews: this.book.reviews
         }
     },
     created() {
-        this.reviews = this.book.reviews;
     },
     methods: {
         onRemoveReview(idx) {
-            bookService.removeReview(this.book.id,idx)
-        }
+            bookService.removeReview(this.book.id, idx)
+        },
     }
 }

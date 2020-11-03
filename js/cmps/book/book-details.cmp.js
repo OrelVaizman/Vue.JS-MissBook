@@ -25,7 +25,6 @@ export default {
            <button @click="closeDetails">Close</button>
            <strong>Reviews:</strong>
            </div>
-
            <reviews-list :book="book"></reviews-list>
            <button @click="onPreviousBook">Previous Book</button><button @click="onNextBook">Next Book </button>
            <book-review class="book-review" :book="book">
@@ -76,6 +75,9 @@ export default {
         onNextBook() {
             var nextBookID = bookService.getNextBookId(this.book.id);
             this.$router.push(`/book/${nextBookID}`)
+        },
+        onBookChange() {
+            this.$emit('bookchange', this.book)
         }
     },
     created() {
@@ -89,7 +91,9 @@ export default {
     watch: {
         '$route.params.bookId'() {
             bookService.getBookById(this.$route.params.bookId)
-                .then(book => this.book = book)
+                .then(book => {
+                    this.book = book;
+                })
         }
     },
     components:
